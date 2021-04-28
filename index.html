@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Práctica API Html5</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="container-input">
+      <h1 class="title">Selecciona un archivo de video</h1>
+      <input type="file" name="video-file" id="video-file" class="btn" />
+    </header>
+    <main class="main">
+      <p class="load-text" id="loading"></p>
+      <section class="container-video hidden" id="section">
+        <video id="video" width="620" accept="video/mp4">
+          El reproductor que estás usando no permite reproducir este contenido.
+        </video>
+        <div class="btns-control">
+          <button id="reproducir" class="btn">Reproducir</button>
+          <button id="pausa" class="btn">Pausa</button>
+          <button id="subir-volumen" class="btn">Subir Volumen</button>
+          <button id="bajar-volumen" class="btn">Bajar Volumen</button>
+        </div>
+      </section>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
