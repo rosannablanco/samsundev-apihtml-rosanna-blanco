@@ -1,20 +1,28 @@
 const inputFile = document.querySelector('#video-file');
+const typeVideo = ['video/mp4', 'video/webm', 'video/ogg'];
 const reader = new FileReader();
-//comprobar formato del video
+
+// comprobar formato del video
 const handleFileInput = (e) => {
   const file = e.target.files[0];
-  reader.readAsDataURL(file);
-  addEventReader();
+  if (comprobarTypeVideo(file) < 0) {
+    alert('El video no se ha podido cargar');
+  } else {
+    alert('El video se ha podido cargar correctamente');
+    reader.readAsDataURL(file);
+    addEventReader();
+  }
 };
-inputFile.addEventListener('change', handleFileInput);
 
-const addEventReader = () => {
-  reader.addEventListener('loadend', handleEventReader);
+// comprobar tipo de video
+const comprobarTypeVideo = (pFile) => {
+  const typeVideoMatch = typeVideo.indexOf(pFile.type);
+  return typeVideoMatch;
 };
 
-const handleEventReader = (e) => {
-  console.dir(e);
-  if (e.type == 'loadend') {
+// mostrar carga
+const mostrarLoading = (e) => {
+  if (e.target.readyState == '2') {
     alert('Cargando...');
   }
   mostrarVideo();
@@ -23,14 +31,14 @@ const handleEventReader = (e) => {
 //mostrar video
 const mostrarVideo = () => {
   const videoFile = document.querySelector('#video');
+  videoFile.volume = 0.5;
   videoFile.src = reader.result;
   const videoContainer = document.querySelector('#section');
   videoContainer.classList.remove('hidden');
-
   addControlBotones(videoFile);
 };
 
-//botones control del video
+//add eventos a los botones
 const addControlBotones = (file) => {
   const reproducirBtn = document.querySelector('#reproducir');
   const pausaBtn = document.querySelector('#pausa');
@@ -43,9 +51,16 @@ const addControlBotones = (file) => {
     file.pause();
   });
   subirVolumBtn.addEventListener('click', () => {
-    file.volume += 0.5;
+    console.log(file.volume);
+    file.volume += 0.1;
   });
   bajarVolumBtn.addEventListener('click', () => {
-    file.volume -= 0.5;
+    file.volume -= 0.1;
   });
 };
+
+const addEventReader = () => {
+  reader.addEventListener('loadend', mostrarLoading);
+};
+
+inputFile.addEventListener('change', handleFileInput);
